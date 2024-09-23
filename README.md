@@ -31,9 +31,9 @@ doi = {10.1137/21M1433502}
 * A C++ compiler with openmp support
 * Cuda, including the cublas and cusparse libraries
 
-The code does not depend on any other external library
+The code does not depend on any other external library.
 
-A CPU only version of the program can also be built without the cuda requirement
+A CPU only version of the program can also be built without the cuda requirement.
 
 As far as I know, visual studio is the only compiler supported by cuda on windows, so you must use visual studio if you want a GPU capable version of the program on windows.
 
@@ -41,9 +41,9 @@ As far as I know, visual studio is the only compiler supported by cuda on window
 
 A visual studio project file is provided.
 
-In order to build the executable file without the project file, you need to compile and link the following C++ files: main.cpp, Matrix2D.cpp, MG2D.cpp, Level.cpp, ConjugateGradient.cpp, functions.cpp
+In order to build the executable file without the project file, you need to compile and link the following C++ files: main.cpp, Matrix2D.cpp, MG2D.cpp, Level.cpp, ConjugateGradient.cpp, functions.cpp.
 
-In addition, for cuda support, the following files must be compiled using the cuda compiler: cuda_functions.cu, obsolete_cuda_functions.cu, and you must define a preprocessor macro with the name HAVE_CUDA when compiling each of the files (both cpp files and cu files)
+In addition, for cuda support, the following files must be compiled using the cuda compiler: cuda_functions.cu, obsolete_cuda_functions.cu, and you must define a preprocessor macro with the name HAVE_CUDA when compiling each of the files (both cpp files and cu files).
 
 ### Building on linux
 
