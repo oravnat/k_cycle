@@ -2349,8 +2349,8 @@ void TestCyclicReduction()
 	cout << "]" << endl;
 	*/
 
-	//CyclicReduction(a, b, c, f, u, 7);
-	IterativeCyclicReductionInPlace(u, a, b, c, 7);
+	CyclicReduction(a, b, c, f, u, 7);
+	//IterativeCyclicReductionInPlace(u, a, b, c, 7);
 
 	cout << "u = [";
 	for (int i = 0; i < 9; i++)
@@ -2439,11 +2439,11 @@ void ParseArgs(int argc, char *argv[])
 }
 
 cublasHandle_t cublasHandle = 0;
-//cusparseHandle_t cusparseHandle = 0;
+cusparseHandle_t cusparseHandle = 0;
 void* pBuffer;
 
 #ifdef HAVE_CUDA
-void AllocateBuffer()
+/*void AllocateBuffer()
 {
 	int nLevels = 14;
 	int n = 1 << nLevels;
@@ -2464,7 +2464,7 @@ void AllocateBuffer()
 	//Buffer size: 2,684,846,080
 	pBuffer = um_malloc(bufferSizeInBytes, UM_ACCESS_GPU);
 
-}
+}*/
 
 /*void CusparseTests()
 {
