@@ -5,7 +5,9 @@
 /* */
 enum cudaError_t
 {
-	cudaSuccess = 0
+	cudaSuccess = 0,
+	cudaErrorStubLibrary = 34
+
 };
 
 #define cudaMemAttachGlobal                 0x01  /**< Memory can be accessed by any stream on any device*/
@@ -42,22 +44,22 @@ static cudaError_t cudaMallocManaged(
 {
 	printf("Error calling cudaMallocManaged() from dummy file!\n");
 	exit(EXIT_FAILURE);
-	return cudaSuccess;
+	return cudaErrorStubLibrary;
 }
 
 static cudaError_t cudaFree(void *devPtr)
 {
-	return cudaSuccess;
+	return cudaErrorStubLibrary;
 }
 
 static cudaError_t cudaMemset(void *devPtr, int value, size_t count)
 {
-	return cudaSuccess;
+	return cudaErrorStubLibrary;
 }
 
 static cudaError_t cudaMemcpy(void *dst, const void *src, size_t count, enum cudaMemcpyKind kind)
 {
-	return cudaSuccess;
+	return cudaErrorStubLibrary;
 }
 
 
@@ -85,12 +87,12 @@ typedef struct cublasContext *cublasHandle_t;
 
 static cublasStatus_t cublasCreate(cublasHandle_t *handle)
 {
-	return CUBLAS_STATUS_SUCCESS;
+	return CUBLAS_STATUS_NOT_SUPPORTED;
 }
 
 static cublasStatus_t cublasDestroy(cublasHandle_t handle)
 {
-	return CUBLAS_STATUS_SUCCESS;
+	return CUBLAS_STATUS_NOT_SUPPORTED;
 
 }
 
@@ -100,7 +102,7 @@ static cublasStatus_t cublasDnrm2(cublasHandle_t handle,
 	int incx,
 	double *result)  /* host or device pointer */
 {
-	return CUBLAS_STATUS_SUCCESS;
+	return CUBLAS_STATUS_NOT_SUPPORTED;
 }
 
 static cublasStatus_t cublasDdot(cublasHandle_t handle,
@@ -111,5 +113,23 @@ static cublasStatus_t cublasDdot(cublasHandle_t handle,
 	int incy,
 	double *result)  /* host or device pointer */
 {
-	return CUBLAS_STATUS_SUCCESS;
+	return CUBLAS_STATUS_NOT_SUPPORTED;
 }
+
+typedef enum {
+	CUSPARSE_STATUS_SUCCESS = 0,
+	CUSPARSE_STATUS_NOT_INITIALIZED = 1,
+	CUSPARSE_STATUS_ALLOC_FAILED = 2,
+	CUSPARSE_STATUS_INVALID_VALUE = 3,
+	CUSPARSE_STATUS_ARCH_MISMATCH = 4,
+	CUSPARSE_STATUS_MAPPING_ERROR = 5,
+	CUSPARSE_STATUS_EXECUTION_FAILED = 6,
+	CUSPARSE_STATUS_INTERNAL_ERROR = 7,
+	CUSPARSE_STATUS_MATRIX_TYPE_NOT_SUPPORTED = 8,
+	CUSPARSE_STATUS_ZERO_PIVOT = 9,
+	CUSPARSE_STATUS_NOT_SUPPORTED = 10,
+	CUSPARSE_STATUS_INSUFFICIENT_RESOURCES = 11
+} cusparseStatus_t;
+
+struct cusparseContext;
+typedef struct cusparseContext* cusparseHandle_t;
