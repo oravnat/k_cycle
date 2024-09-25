@@ -43,7 +43,7 @@ A visual studio solution with 2 project files are provided. You can build a CPU-
 
 In order to build the CPU-only executable file without the project file, you need to compile and link the following C++ files: main.cpp, Matrix2D.cpp, MG2D.cpp, Level.cpp, ConjugateGradient.cpp, functions.cpp. You also need to specify Stack Reverse Size of 100000000.
 
-In addition, for cuda support, the following cuda_functions.cu file must be compiled using the cuda compiler and you must define a preprocessor macro with the name HAVE_CUDA when compiling each of the files (both cpp files and cu files). You also need to link with the library files cublas.lib and cusparse.lib.
+In addition, for cuda support, the file cuda_functions.cu must be compiled using the cuda compiler and you must define a preprocessor macro with the name HAVE_CUDA when compiling each of the files (both cpp files and cu files). You also need to link with the library files cublas.lib and cusparse.lib.
 
 ### Building on linux
 
