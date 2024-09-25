@@ -5,6 +5,8 @@ VisualStudioVersion = 17.9.34723.18
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "k_cycle_no_cuda", "k_cycle_no_cuda.vcxproj", "{1AD7B4D3-0215-4F1E-8B4F-22250F5D015D}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "k_cycle_cuda", "k_cycle_cuda.vcxproj", "{5D74FE0F-6416-4026-BC77-D35D8D4143C8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -15,6 +17,10 @@ Global
 		{1AD7B4D3-0215-4F1E-8B4F-22250F5D015D}.Debug|x64.Build.0 = Debug|x64
 		{1AD7B4D3-0215-4F1E-8B4F-22250F5D015D}.Release|x64.ActiveCfg = Release|x64
 		{1AD7B4D3-0215-4F1E-8B4F-22250F5D015D}.Release|x64.Build.0 = Release|x64
+		{5D74FE0F-6416-4026-BC77-D35D8D4143C8}.Debug|x64.ActiveCfg = Debug|x64
+		{5D74FE0F-6416-4026-BC77-D35D8D4143C8}.Debug|x64.Build.0 = Debug|x64
+		{5D74FE0F-6416-4026-BC77-D35D8D4143C8}.Release|x64.ActiveCfg = Release|x64
+		{5D74FE0F-6416-4026-BC77-D35D8D4143C8}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
