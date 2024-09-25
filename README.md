@@ -29,7 +29,7 @@ doi = {10.1137/21M1433502}
 ### Requirements
 
 * A C++ compiler with openmp support
-* Cuda, including the cublas and cusparse libraries
+* Cuda, including the cublas and cusparse libraries that comes with cuda
 
 The code does not depend on any other external library.
 
@@ -39,11 +39,11 @@ As far as I know, visual studio is the only compiler supported by cuda on window
 
 ### Building on Windows
 
-A visual studio project file is provided.
+A visual studio solution with 2 project files are provided. You can build a CPU-only version of the program using the file k_cycle_no_cuda.vcxproj and a GPU capable version using the file k_cycle_cuda.vcxproj.
 
-In order to build the executable file without the project file, you need to compile and link the following C++ files: main.cpp, Matrix2D.cpp, MG2D.cpp, Level.cpp, ConjugateGradient.cpp, functions.cpp.
+In order to build the CPU-only executable file without the project file, you need to compile and link the following C++ files: main.cpp, Matrix2D.cpp, MG2D.cpp, Level.cpp, ConjugateGradient.cpp, functions.cpp. You also need to specify Stack Reverse Size of 100000000.
 
-In addition, for cuda support, the following files must be compiled using the cuda compiler: cuda_functions.cu, obsolete_cuda_functions.cu, and you must define a preprocessor macro with the name HAVE_CUDA when compiling each of the files (both cpp files and cu files).
+In addition, for cuda support, the following cuda_functions.cu file must be compiled using the cuda compiler and you must define a preprocessor macro with the name HAVE_CUDA when compiling each of the files (both cpp files and cu files). You also need to link with the library files cublas.lib and cusparse.lib.
 
 ### Building on linux
 
