@@ -39,7 +39,7 @@ As far as I know, visual studio is the only compiler supported by cuda on window
 
 ### Building on Windows
 
-A visual studio solution with 2 project files are provided. You can build a CPU-only version of the program using the file k_cycle_no_cuda.vcxproj and a GPU capable version using the file k_cycle_cuda.vcxproj.
+A visual studio solution with 2 project files are provided. You can build a CPU-only version of the program using the file k_cycle_no_cuda.vcxproj and a GPU capable version using the file k_cycle_cuda.vcxproj. The GPU project file currently assumes cuda version 12.6, if you have another version you may need to update this setting or re-create the project file with the appropriated cuda version.
 
 In order to build the CPU-only executable file without the project file, you need to compile and link the following C++ files: main.cpp, Matrix2D.cpp, MG2D.cpp, Level.cpp, ConjugateGradient.cpp, functions.cpp. You also need to specify Stack Reverse Size of 100000000.
 
