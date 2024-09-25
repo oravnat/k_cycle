@@ -52,5 +52,5 @@ On linux, the code has been tested using the gcc compiler only, but should be ab
 You can build the executable file using the command:
 
 ```
-nvcc main.cpp MG2D.cpp Matrix2D.cpp Level.cpp ConjugateGradient.cpp deviceQuery.cpp functions.cpp cuda_functions.cu obsolete_cuda_functions.cu -o k_cycle_cuda.out -O3 -Xcompiler -fopenmp -DHAVE_CUDA -lcublas -lcusparse
+nvcc main.cpp MG2D.cpp Matrix2D.cpp Level.cpp ConjugateGradient.cpp functions.cpp cuda_functions.cu -o k_cycle_cuda.out -O3 -Xcompiler -fopenmp -DHAVE_CUDA -lcublas -lcusparse
 ```
