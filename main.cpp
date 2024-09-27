@@ -92,7 +92,7 @@ const char* methodNames[] = {
 
 int kk[] = { 1, 2, 3, 4, 99 };
 //int kk[] = { 0 };
-const double epsilon = 1e-5;
+double epsilon = 1e-5;
 double angleDeg = 45;
 double angle = angleDeg * (M_PI / 180);
 
@@ -112,7 +112,7 @@ RelaxMethod relaxMethod = OptimalPointJacobi;
 //RelaxMethod relaxMethod = XYZebra;
 //RelaxMethod relaxMethod = YXZebra;
 ////RelaxMethod relaxMethod = PointRB;
-const double epsilons[] = { 1, 1e-1, 1e-2, 1e-3, 1e-4 };
+const double epsilons[] = { 1, 1e-1, 1e-2, 1e-3, 1e-4, 1e-5 };
 const int COUNT_DURATION_FOR_LEVEL = 7;
 const char* testName = "";
 bool bAlwaysCalcUNrom = false;
@@ -674,7 +674,7 @@ double calcSmoothing(RelaxMethod relaxMethod, double ep, double ang, bool printI
 	else if (relaxMethod == YZebra)
 		mu = ylineRB;
 
-	if (bPrintSelectInfo)
+	if (bPrintSelectInfo && mu > 0.0)
 	{
 		cout << "Expected smoothing factor: " << mu << endl;
 	}
@@ -1744,9 +1744,7 @@ void CompareAngle(int nu1, int nu2, bool bCG, double runtimes[], int a_nCycles[]
 void CompareAngles(bool bCG = true)
 {
   const double angles[] = {10, 30, 45, 60, 80};
-  //const double angles[] = {80};
   const int nAng = sizeof(angles) / sizeof(angles[0]);
-  //bCG = false;
   const bool bStandAlone = true;
   double runtimes[nAng][NUM_K];
   int nCycles[nAng][NUM_K];
@@ -1767,6 +1765,8 @@ void CompareAngles(bool bCG = true)
 		CompareAngle(nu1, nu2, false, runtimes[iAng], nCycles[iAng]);
   }
 
+  cout << "\n\n\n";
+
   if (bStandAlone)
   {
 	  cout << "Stand-alone multigrid results:" << endl;
@@ -1782,7 +1782,9 @@ void CompareAngles(bool bCG = true)
 			  cout << " | " << runtimes[iAng][k] * 1000.0 << "(" << nCycles[iAng][k] << ")";
 		  cout << endl;
 	  }
+	  cout << endl;
   }
+
 
   if (bCG)
   {
@@ -1798,6 +1800,7 @@ void CompareAngles(bool bCG = true)
         cout << " | " << runtimes_cg[iAng][k] * 1000.0 << "(" << nCycles_cg[iAng][k] << ")";
       cout << endl;
     }
+	cout << endl;
   }
 
   if (bStandAlone)
@@ -2391,11 +2394,11 @@ void PrintUsage(char * progamName)
 	cout << "-max_levels/-n_levels - number of multigrid levels to run";
 	*/
 
-	cout << "usgae: k_cycle [-max_levels n] [-n_levels n] [-last_k k] [-semi-coarsening 0/1]\n";
-	cout << "               [-test test_name][-relax-method relax_name][-problem-index 0/1/2][-gpu][-Galerkin]\n\n";
+	cout << "usgae: k_cycle [-test test_name][-relax-method relax_name][-max_levels n][-n_levels n][-last_k k]\n";
+	cout << "               [-problem-index 0/1/2][-gpu][-Galerkin][-semi-coarsening][-eps d]\n\n";
 	cout << "options (the first one is the default):\n";
-	cout << "-test test_name                    test_name = usage/TestKCycleTime/TestKCycleSolveTimeAsFunctionOfEps/CompareToConjugateGradient/CompareAnglesNoCG\n";
-	cout << "-relax-method relax_name           relax_name = OptimalPointJacobi/XZebra\n";
+	cout << "-test test_name                    test_name = usage/TestKCycleTime/TestKCycleSolveTimeAsFunctionOfEps/CompareToConjugateGradient/CompareAnglesNoCG/CompareAngles\n";
+	cout << "-relax-method relax_name           relax_name = OptimalPointJacobi/XZebra/XYZebra\n";
 }
 
 void ParseArgs(int argc, char *argv[])
@@ -2412,17 +2415,19 @@ void ParseArgs(int argc, char *argv[])
 				nLevels = atoi(argv[i + 1]);
 			if (strcmp(argv[i], "-last_k") == 0)
 				last_k = atoi(argv[i + 1]);
-			if (strcmp(argv[i], "-semi-coarsening") == 0)
-				bSemiCoarsening = atoi(argv[i + 1]);
 			if (strcmp(argv[i], "-test") == 0)
 				testName = argv[i + 1];
 			if (strcmp(argv[i], "-relax-method") == 0)
 			{
 				if (strcmp(argv[i + 1], "XZebra") == 0)
 					relaxMethod = XZebra;
+				if (strcmp(argv[i + 1], "XYZebra") == 0)
+					relaxMethod = XYZebra;
 			}
 			if (strcmp(argv[i], "-problem-index") == 0)
 				problemIndex = atoi(argv[i + 1]);
+			if (strcmp(argv[i], "-eps") == 0)
+				epsilon	= atof(argv[i + 1]);
 		}
 		if (strcmp(argv[i], "-gpu") == 0)
 		{
@@ -2435,6 +2440,8 @@ void ParseArgs(int argc, char *argv[])
 		}
 		if (strcmp(argv[i], "-Galerkin") == 0)
 			bGalerkin = true;
+		if (strcmp(argv[i], "-semi-coarsening") == 0)
+			bSemiCoarsening = true;
 	}
 }
 
@@ -2568,6 +2575,7 @@ int main(int argc, char *argv[])
   		//CheckKernelLaunchTime();
   		//TestRelaxationDurations();
   		//TestFixedNumberOfIterations(11);
+		//TestCyclicReduction();
 
 		if (strcmp(testName, "") == 0 || strcmp(testName, "usage") == 0)
 			PrintUsage(argv[0]);
@@ -2577,16 +2585,13 @@ int main(int argc, char *argv[])
 			TestKCycleSolveTimeAsFunctionOfEps(nLevels);
 		else if (strcmp(testName, "CompareToConjugateGradient") == 0)
 		{
-			//for (int nu = 2; nu <= 2; nu++)
-				//CompareToConjugateGradient(nu, nu);
 			int nu = 2;
 			CompareToConjugateGradient(nu, nu);
 		}
-  		//test_gmres(5);
-		if (strcmp(testName, "CompareAnglesNoCG") == 0)
+		if (strcmp(testName, "CompareAngles") == 0)
 			CompareAngles();
-
-  		//TestCyclicReduction();
+		if (strcmp(testName, "CompareAnglesNoCG") == 0)
+			CompareAngles(false);
 	}
 	catch (const char* ex)
 	{
