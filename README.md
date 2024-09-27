@@ -1,12 +1,12 @@
 # k_cycle
 
-A multigrid kappa-cycle implementation:
+A multigrid $\kappa$-cycle implementation:
 
 C++ implementation of "On the Recursive Structure of Multigrid Cycles" by Or Avnat and Irad Yavneh
 
 Paper URLs: https://doi.org/10.1137/21M1433502, https://arxiv.org/abs/2010.00626
 
-This code implements a multigrid "kappa-cycle" type, which is a family of cycle types which includes the classic "v-cycle", "w-cycle" and "f-cycle" types. The code may run on the CPU or on the GPU using cuda, decided by a command line option. The code also implements a Conjugate Gradients solver with a multigrid cycle as a preconditioner.
+This code implements a multigrid "$\kappa$-cycle" type, which is a family of cycle types which includes the classic "v-cycle", "w-cycle" and "f-cycle" types. The code may run on the CPU or on the GPU using cuda, decided by a command line option. The code also implements a Conjugate Gradients solver with a multigrid cycle as a preconditioner.
 
 ## Citation
 
@@ -60,7 +60,7 @@ nvcc main.cpp MG2D.cpp Matrix2D.cpp Level.cpp ConjugateGradient.cpp functions.cp
 The usage of the program is as follows (assuming the name of the excutable file is k_cycle):
 
 ```
-usgae: k_cycle [-test test_name][-relax-method relax_name][-max_levels n] [-n_levels n] [-last_k k] 
+usgae: k_cycle [-test test_name][-relax-method relax_name][-max_levels n][-n_levels n][-last_k k] 
                [-problem-index 0/1/2][-gpu][-Galerkin][-semi-coarsening][-eps d]
 ```
 
