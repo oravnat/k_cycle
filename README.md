@@ -117,3 +117,49 @@ The possible values are:
 * 0 - The solution is the zero matrix, and the initial guess is generated randomly (but consistently in each run with the same parameters). This is used to ensure that round-off errors are not accumulated when many cycles are perfomed.
 * 1 - The solution is sin($\pi$ $\cdot$ x)+sin($\pi$ $\cdot$ y), the initial guess is zero.
 * 2 - The solution is 2sin($\pi$ $\cdot$ x)+sin(2 $\cdot$ $\pi$ $\cdot$ y), the initial guess is zero.
+
+### Run examples:
+
+```
+k_cycle -test TestKCycleTime -problem-index 0 -max_levels 13 -gpu
+```
+
+This would run $\kappa$-cycles to check their runtime for various $\kappa$ values when the number of levels range from 4 to 13 on the GPU.
+This can be used to reproduce the results of figure 3.1 in the paper.
+
+```
+k_cycle -test TestKCycleSolveTimeAsFunctionOfEps -problem-index 0 -n_levels 9 -gpu
+k_cycle -test TestKCycleSolveTimeAsFunctionOfEps -problem-index 0 -n_levels 13 -gpu
+```
+
+These would run $\kappa$-cycles to check the time it takes them to converge to the solution for various $\kappa$ values and angles with 9 levels and with 13 levels on the GPU.
+The relaxation method on each level is a damped Jacobi with optimal damping factor, the grid is coarsened using standard coarsening.
+An epsilon value of 0.00001 is used.
+These can be used to reproduce the results of figure 4.1 in the paper.
+
+```
+k_cycle -test CompareToConjugateGradient -problem-index 0 -n_levels 12 -eps 0.0001 -gpu
+```
+
+This would run $\kappa$-cycles to check the time it takes them to converge to the solution for various $\kappa$ values with 12 levels on the GPU. This would also run Conjugate Gradients solvers with the same type of multigrid cycle as a preconditioner.
+The relaxation method on each level is a damped Jacobi with optimal damping factor, the grid is coarsened using standard coarsening.
+An epsilon value of 0.0001 is used.
+This can be used to reproduce the results of tables 4.1 and 4.2 in the paper.
+
+```
+k_cycle -test CompareAngles -problem-index 0 -n_levels 14 -Galerkin -relax-method XYZebra -eps 0.00001 -gpu
+```
+
+This would run $\kappa$-cycles to check the time it takes them to converge to the solution for various $\kappa$ values and various angles and with 14 levels on the GPU. This would also run Conjugate Gradients solvers with the same type of multigrid cycle as a preconditioner.
+The relaxation method on each level is line Gauss-Seidel in Red-Black ordering along the x-coordinate and then along the y-coordinate, the grid is coarsened using standard coarsening. Galerkin is used to construct the operators on coarser grids.
+An epsilon value of 0.00001 is used.
+This can be used to reproduce the results of tables 4.3 and 4.4 in the paper.
+
+```
+k_cycle -test CompareAngles -problem-index 0 -n_levels 14 -Galerkin -relax-method XZebra -semi-coarsening -eps 0.00001 -gpu
+```
+
+This would run $\kappa$-cycles to check the time it takes them to converge to the solution for various $\kappa$ values and various angles and with 14 levels on the GPU. This would also run Conjugate Gradients solvers with the same type of multigrid cycle as a preconditioner.
+The relaxation method on each level is line Gauss-Seidel in Red-Black ordering along the x-coordinate, the grid is coarsened only along the y-coordinate. Galerkin is used to construct the operators on coarser grids.
+An epsilon value of 0.00001 is used.
+This can be used to reproduce the results of tables 4.5 and 4.6 in the paper.
