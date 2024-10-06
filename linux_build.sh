@@ -1,0 +1,1 @@
+nvcc main.cpp MG2D.cpp Matrix2D.cpp Level.cpp ConjugateGradient.cpp functions.cpp cuda_functions.cu -o k_cycle_cuda.out -O3 -Xcompiler -fopenmp -DHAVE_CUDA -lcublas -lcusparse
