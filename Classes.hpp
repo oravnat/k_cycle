@@ -1,3 +1,5 @@
+//  This file is part of k_cycle by Or Avnat: https://github.com/oravnat/k_cycle
+
 #pragma once
 
 #define HAVE_OPEN_MP

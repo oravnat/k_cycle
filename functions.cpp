@@ -1,3 +1,5 @@
+//  This file is part of k_cycle by Or Avnat: https://github.com/oravnat/k_cycle
+
 #include "Classes.hpp"
 #include <stdio.h>
 #include <stdlib.h>
